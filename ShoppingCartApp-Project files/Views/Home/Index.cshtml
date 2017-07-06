@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+@Styles.Render("~/Conent/css")
+<div class="jumbotron">
+    <h1>Welcome to Shopping Cart Application !!</h1></div>
+    <div id="SlideshowImages">
+    <div> <img src="~/Content/Images/Apple-iPhone-7.jpg" height="500" width="500"> </div>
+    <div> <img src="~/Content/Images/bag.png" height="500" width="500"> </div>
+    <div> <img src="~/Content/Images/LED-tv.jpg" height="500" width="500"> </div>
+    <div> <img src="~/Content/Images/shoe.jpg" height="500" width="500"> </div>
+    <div> <img src="~/Content/Images/slipper.png" height="500" width="500"> </div>
+   </div>
+   
+<style type="text/css" style="display: none !important;">
+   #SlideshowImages {  
+        margin: 50px auto;  
+        position: relative;  
+        width: 500px;  
+        height: 500px;  
+        padding: 10px;  
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);  
+    }  
+
+        #SlideshowImages > div {
+            position: absolute;
+            top:auto;
+            left: auto;
+            right: auto;
+            bottom: auto;
+        }
+</style>
+
+  <script type="text/javascript">
+
+    $(document).ready(function()
+    {
+        $("#slideshow > div:gt(0)").hide();
+        setInterval(function () {
+            $('#SlideshowImages > div:first').fadeOut(2000).next().fadeIn(2000).end().appendTo('#SlideshowImages');
+        }, 4000);
+    });
+</script>  
+    

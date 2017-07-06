@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ShoppingAppFB.Models.BuyerProductDetail>
+    @{
+        ViewBag.Title = "Success";
+    }
+
+    <h2>Success</h2>
+    <h3>Your order has been placed</h3>
+    <h3>Your order number is: @ViewBag.orderid</h3>
+<h3>Your product will be shipped to your billing address</h3>
+<h3>Thank you for shopping with us !!</h3>
+<tr>
+@Html.ActionLink("Continue Shopping", "BuyProduct", "Home")
+</tr>

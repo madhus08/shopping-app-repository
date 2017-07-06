@@ -1,0 +1,95 @@
+﻿@model List<ShoppingAppFB.Models.CartDetail>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@{
+    ViewBag.Title = "Cart";
+}
+
+@*<div class="row">*@
+
+<div class="form-horizontal">
+    @{
+        var cou = 1;
+        decimal total = 0;
+    }
+    </br>
+    </br>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Item Count</td>
+                <td>Item Image</td>
+                <td>Item Name</td>
+                <td>Quantity</td>
+                <td>Price</td>
+                <td>Total</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Prodc in Model)
+            {
+                <tr>
+                    <td>@cou</td>
+                    @{
+                        cou++;
+                        var pro = ViewData["productim"] as List<ShoppingAppFB.Models.SellProductDetail>;
+                        var pri = new decimal();
+                    }
+                    @foreach (var dat in pro)
+                    {
+                        if (dat.ItemID == Prodc.ItemID )
+                        {
+                            var base64 = Convert.ToBase64String(dat.ItemImage);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);  //converts image to base64 format to display in view
+                            <td><img src=@imgSrc style="max-width:100px; max-height:100px;" /></td>
+                            <td>@dat.ItemName</td>
+                            pri = Convert.ToDecimal(dat.ItemPrice);
+                        }
+                        Session["itemid"] = dat.ItemID.ToString();
+                    }
+                    <td>@Prodc.Count</td>
+                    <td>@string.Format("{0:n2}", pri)</td>
+                    @{var s = Prodc.Count * pri;
+                        total = total + s; //total of purchased items
+                    }
+                    <td>@string.Format("{0:n2}", s)</td>
+                    @* button click action to remove selected item from the cart *@
+                    <td>@Html.ActionLink("RemoveFromCart", "Remove", "Home", new { id = Prodc.ItemID }, "")</td> 
+                </tr>
+                        }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">Total Amount</td>
+                <td>@string.Format("{0:n2}", total)</td>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    <div class="row">
+        <div class="col-lg-6" style="float:left;">
+            <p class="btn btn-primary">
+                @{
+                    string dpath = ViewData["path"] as string;
+                    int path = Convert.ToInt16(dpath);
+                }
+                @* checkout the items *@
+                @Html.ActionLink("Checkout", "Checkout", "Home", new { id = Session["itemid"].ToString(), tot = total }, "")
+            </p>
+        </div>
+        <div class="col-lg-6" style="float:right;">
+            <p class="btn btn-primary">
+                @if (path == 0)
+            {
+                    @Html.ActionLink("Continue Shopping", "BuyProduct", "Home")
+                }
+                else
+                {
+                    @Html.ActionLink("Continue Shopping", "Index", "Home", new { id = path, @style = "btn-primary;" }, null)
+                }
+
+            </p>
+        </div>
+    </div>
+

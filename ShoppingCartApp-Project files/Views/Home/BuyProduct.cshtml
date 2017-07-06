@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ShoppingAppFB.Models.SellProductDetail>
+
+@{
+    ViewBag.Title = "BuyProduct";
+}
+
+<h2>BuyProduct</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SellerID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemImage)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var sellerid = "http://facebook.com/" + item.SellerID;
+        <tr>
+            <td>
+               @Html.DisplayFor(modelItem => sellerid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            @* convert varbinary format of image to base64 *@
+            <td>
+                @{
+                    var base64 = Convert.ToBase64String(item.ItemImage);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+                <img src='@imgSrc' style="max-width:100px; max-height:100px;" />
+            </td>
+
+            <td>
+                @Html.ActionLink("Add To Cart", "AddtoCart", "Home", new { id = item.ItemID }, "")
+            </td>
+          
+        </tr>
+                    }
+
+</table>

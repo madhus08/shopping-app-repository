@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ShoppingAppFB.Models.CartDetail>
+
+@{
+    ViewBag.Title = "ViewCart1";
+}
+
+<h2>ViewCart1</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellerID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+       
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SellerID)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "Remove", "AddtoCart", new { id = item.CartID }, "")
+            </td>
+            </tr>
+        string item1 = "";
+        string sum = "";
+        sum += item.ItemPrice;
+        ViewBag.Sum = sum;
+        item1 += item.ItemID;
+        ViewBag.Sample = item1;
+            
+    }
+       @{
+
+        @Html.ActionLink("Checkout", "Checkout", "AddtoCart", new { id = ViewBag.Sample, sum = ViewBag.Sum }, "")}
+
+
+</table>
